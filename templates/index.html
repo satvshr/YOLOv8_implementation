@@ -12,11 +12,40 @@
                 <input type="file" class="custom-file-input" id="video" name="video" accept=".mp4">
                 <label class="custom-file-label" for="video">Choose a video</label>
             </div>
-            <button type="submit" class="btn btn-success mt-3">Detect Number of Objects</button>
+            <button type="submit" class="btn btn-success mt-3" onclick="startProcessing()">Detect Number of Objects</button>
         </form>
+        <div id="loading" style="display: none;">
+            <p>Please wait while we process your video...</p>
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div id="result" style="display: none;">
+            <h4 class="text-center pt-4">Maximum Count of people in the video are: <span id="prediction"></span></h4>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function startProcessing() {
+            // Show the loading section and hide the result section
+            const loadingSection = document.getElementById('loading');
+            const resultSection = document.getElementById('result');
+            loadingSection.style.display = 'block';
+            resultSection.style.display = 'none';
+        }
+
+        const prediction = '{{ prediction }}'; 
+        console.log(prediction)
+        if (prediction) {
+            // Hide the loading section and show the result section
+            const loadingSection = document.getElementById('loading');
+            const resultSection = document.getElementById('result');
+            loadingSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            document.getElementById('prediction').textContent = prediction;
+        } 
+    </script>
 </body>
 </html>
