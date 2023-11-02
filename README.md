@@ -1,11 +1,3 @@
-
-https://github.com/satvshr/YOLOv8_implementation/assets/112589278/e3ca2686-2825-4042-a374-90e13e49b067
-
-https://github.com/satvshr/YOLOv8_implementation/assets/112589278/28fdcd0a-fcf8-4292-a73e-6cddb21818ad
-
-https://github.com/satvshr/YOLOv8_implementation/assets/112589278/1cfc97ed-bfe2-470f-ba8b-369f81a0f52a
-
-https://github.com/satvshr/YOLOv8_implementation/assets/112589278/d93c8385-89c7-4c6a-903d-c4e3a0409534
 # YOLOv8_implementation
 
 This is a Flask application that uses YOLO(v8) (You Only Look Once) object detection and tracking to count the number of people in a video and display the results in a user-friendly way.
