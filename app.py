@@ -21,6 +21,7 @@ def predict():
     print(source)
     if source:
         results = model(source, stream=True) 
+        lst = []
         max_count = 0
         for result in results:
             x = result.tojson()
@@ -31,8 +32,11 @@ def predict():
                     count += 1
             if count > max_count:
                 max_count = count
+            lst.append(count)
+        avg = round(sum(lst) / len(lst), 1)
+        pred = [max_count, avg]
         print(max_count)
-        return render_template("index.html", prediction=max_count)
+        return render_template("index.html", prediction=pred)
 
 if __name__ == "__main__":
     app.run(debug=True)

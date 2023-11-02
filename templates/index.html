@@ -1,51 +1,93 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>YOLOv8 Object Detection</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-4">YOLOv8 Object Detection</h1>
-        <form method="POST" action="/predict" enctype="multipart/form-data" class="text-center">
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="video" name="video" accept=".mp4">
-                <label class="custom-file-label" for="video">Choose a video</label>
-            </div>
-            <button type="submit" class="btn btn-success mt-3" onclick="startProcessing()">Detect Number of Objects</button>
-        </form>
-        <div id="loading" style="display: none;">
-            <p>Please wait while we process your video...</p>
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+      <h1 class="text-center mb-4">YOLOv8 Object Detection</h1>
+      <form
+        method="POST"
+        action="/predict"
+        enctype="multipart/form-data"
+        class="text-center"
+      >
+        <div class="custom-file">
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="video"
+              name="video"
+              onchange="updateLabel()"
+            />
+            <label class="custom-file-label" id="video-label" for="video"
+              >Choose a video</label
+            >
+          </div>
         </div>
-        <div id="result" style="display: none;">
-            <h4 class="text-center pt-4">Maximum Count of people in the video are: <span id="prediction"></span></h4>
+        <button
+          type="submit"
+          class="btn btn-success mt-3"
+          onclick="startProcessing()"
+        >
+          Detect Number of Objects
+        </button>
+      </form>
+      <div id="loading" style="display: none; text-align: center;" class="pt-4">
+        <p class="d-inline">Please wait while we process your video...</p>
+        <div class="spinner-border ml-2" role="status">
+            <span class="sr-only">Loading...</span>
         </div>
+    </div>    
+      <div id="result" style="display: none">
+        <h6 class="text-center pt-4">
+          Maximum Count of people in the video are:
+          <span id="prediction0"></span>
+        </h6>
+        <h6 class="text-center pt-1">
+            Average Count of people in the video are:
+            <span id="prediction1"></span>
+          </h6>
+      </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        function startProcessing() {
-            // Show the loading section and hide the result section
-            const loadingSection = document.getElementById('loading');
-            const resultSection = document.getElementById('result');
-            loadingSection.style.display = 'block';
-            resultSection.style.display = 'none';
-        }
+      function startProcessing() {
+        // Show the loading section and hide the result section
+        const loadingSection = document.getElementById("loading");
+        const resultSection = document.getElementById("result");
+        loadingSection.style.display = "block";
+        resultSection.style.display = "none";
+      }
 
-        const prediction = '{{ prediction }}'; 
-        console.log(prediction)
-        if (prediction) {
-            // Hide the loading section and show the result section
-            const loadingSection = document.getElementById('loading');
-            const resultSection = document.getElementById('result');
-            loadingSection.style.display = 'none';
-            resultSection.style.display = 'block';
-            document.getElementById('prediction').textContent = prediction;
-        } 
+      const prediction = "{{ prediction }}";
+      console.log(prediction);
+      if (prediction) {
+        // Hide the loading section and show the result section
+        const loadingSection = document.getElementById("loading");
+        const resultSection = document.getElementById("result");
+        loadingSection.style.display = "none";
+        resultSection.style.display = "block";
+        document.getElementById("prediction0").textContent = prediction.slice(1, 3);
+        document.getElementById("prediction1").textContent = prediction.slice(5, 8);
+      }
+      function updateLabel() {
+        const input = document.getElementById("video");
+        const label = document.getElementById("video-label");
+
+        if (input.files.length > 0) {
+          label.textContent = input.files[0].name;
+        } else {
+          label.textContent = "Choose a video";
+        }
+      }
     </script>
-</body>
+  </body>
 </html>
